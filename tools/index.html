@@ -1,63 +1,73 @@
 <html>
-<!-- Thanks to Github Pages for making an easy and free webhost! -->
-<head>
-	<title>tristana</title>
-	<style>
-		body{
-			background-color: black;
-			position:relative;
-			font-family:monospace;
-			color: #999999;
-			font-size:1em;
-		}
-		a:link{
-			text-decoration:none;
-		}
-		a{
-			color:white;
-		}
-		#content{
-			position:absolute;
-			top:50%;
-			left:50%;
-			transform:translate(-50%,-50%);
-			text-align:center;
-		}
-		#title{
-			font-size:1.25em;
-		}
-		#footer{
-			position:fixed;
-			left:0;
-			bottom:0;
-			width:100%;
-			color:black;
-			text-align:center;
-			font-size:1.25em;
-		}
-	</style>
-	<meta property="og:site_name" content="13chag">
-	<meta property="og:url" content="http://tristana.13chag.net/">
-	<meta property="og:title" content="tristana">
-	<meta property="og:type" content="website">
-	<meta property="og:description" content="dab">
+	<!-- Thanks to Github Pages for making an easy and free webhost! -->
+	<head>
+		<title>Dokkan Orb Tracker</title>
+		<style>
+			td {
+			text-align: right;
+			}
+		</style>
+		<meta property="og:site_name" content="13chag" />
+		<meta property="og:url" content="http://tristana.13chag.net/tools/dokkanorb" />
+		<meta property="og:title" content="Dokkan Orb Tracker" />
+		<meta property="og:type" content="website" />
+		<meta property="og:description" content="Track which path to go through next" />
 
-	<meta property="og:image" content="http://tristana.13chag.net/wig.png">
-	<meta property="og:image:secure_url" content="http://tristana.13chag.net/wig.png">
+		<meta property="og:image" content="http://tristana.13chag.net/wig.png" />
+		<meta property="og:image:secure_url" content="http://tristana.13chag.net/wig.png" />
 
 
-	<meta name="twitter:card" content="summary_large_image">
-	<meta name="twitter:title" content="tristana">
-	<meta name="twitter:description" content="dab">
-</head>
-<body>
-	<div id="content">
-		<div id="title">tristana</div>
-		<div id="links">
-			<a href="https://twitter.com/TristanaGW">twitter</a></br>
-			<a href="https://bards-of-canada.tumblr.com/">tumblr</a>
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="tristana" />
+		<meta name="twitter:description" content="dab" />
+	</head>
+	<body>
+		<div id="container">
+			<div id="description">Free to play Extreme Z Awakening units require 6390 small orbs, 3480 medium orbs and 336 small orbs. This tool calculates the percentage of orbs you have towards the total you need so that you can accurately work out which size of orb you need to prioritize.</div>
+			<table>
+				<tr>
+					<th>Size</th><th>Amount</th><th>Percentage<br />(of orbs needed)</th>
+				</tr>
+				<tr>
+					<td>Small:</td><td><input onchange="runCalc()" class="numberfield" type="number" id="sml" name="small" min="0" value="0" /></td><td><div id="smlper">0.00%</div></td>
+				</tr>
+				<tr>
+					<td>Medium:</td><td><input onchange="runCalc()" class="numberfield" type="number" id="med" name="medium" min="0" value="0" /></td><td><div id="medper">0.00%</div></td>
+				</tr>
+				<tr>
+					<td>Large:</td><td><input onchange="runCalc()" class="numberfield" type="number" id="lrg" name="large" min="0" value="0" /></td><td><div id="lrgper">0.00%</div></td>
+				</tr>
+			</table>
+			<div id="info">Focus on any path.</div>
 		</div>
-	</div>
-	<div id="footer">there will be more eventually</div>
-</body>
+
+		<script>
+			var perc = [];
+			var percnames = ["small","medium","large"];
+			var tempperc = 999999999, lowestperc = 0;
+			function runCalc() {
+				
+				perc[0] = (document.getElementById("sml").value / 6390) * 100;
+				perc[1] = (document.getElementById("med").value / 3480) * 100;
+				perc[2] = (document.getElementById("lrg").value / 336) * 100;
+				document.getElementById("smlper").innerHTML = perc[0].toFixed(2) + "%";
+				document.getElementById("medper").innerHTML = perc[1].toFixed(2) + "%";
+				document.getElementById("lrgper").innerHTML = perc[2].toFixed(2) + "%";
+				
+				for (var i = 0; i < perc.length; i++){
+					if (perc[i] < tempperc) {
+						tempperc = perc[i];
+						lowestperc = i;
+					}
+				}
+				
+				if (perc[0] != perc[1] && perc[0] != perc[2] && perc[1] != perc[2]) {
+					document.getElementById("info").innerHTML = "Focus on the " + percnames[lowestperc] + " path.";
+				}
+				else {
+					document.getElementById("info").innerHTML = "Focus on any path.";
+				}
+			}
+		</script>
+	</body>
 </html>
