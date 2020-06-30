@@ -29,7 +29,7 @@
 	<body>
 		<div id="container">
 			<!--<div id="description">Free to play Extreme Z Awakening units require 6390 small orbs, 3480 medium orbs and 336 small orbs. This tool calculates the percentage of orbs you have towards the total you need so that you can accurately work out which size of orb you need to prioritize.</div>-->
-			<div id="description">This is a tool to calculate the percentages of orbs you have towards the totals to fully 100% the Hidden Potential system of units in Dragon Ball Z Dokkan Battle.<br />Select which unit you are looking to max in the dropdown below.</div>
+			<div id="description">This is a tool to calculate the percentages of orbs you have towards the totals to fully 100% the Hidden Potential system of units in Dragon Ball Z Dokkan Battle. It will tell you what path to focus based on your lowest percentage for ease of use.<br />Select which unit you are looking to max in the dropdown below.</div>
 			<div id="dropdown">
 				<select id="unitSelect" onchange="unitChange()">
 					<option value=[4310,2470,223]>Non-Special AGL, TEQ, STR and PHY units</option>
@@ -74,7 +74,7 @@
 					<td>Large:</td><td><input onchange="runCalc()" class="numberfield" type="number" id="lrg" name="large" min="0" value="0" /></td><td><div id="lrgper">0.00%</div></td>
 				</tr>
 			</table>
-			<div id="info">Focus on any path.</div>
+			<div id="info">Start the mission or input existing orb values</div>
 		</div>
 
 		<script>
@@ -83,9 +83,9 @@
 				'medium':0,
 				'large':0
 			};
-			var percnames = ["small","medium","large"];
-			var tempperc = 999999999, lowestperc = 0;
 			var compareOrb = [4310,2470,223];
+			var smallest = '';
+			var largest = '';
 			
 			function unitChange() {
 				compareOrb = JSON.parse(document.getElementById("unitSelect").value);
@@ -100,7 +100,6 @@
 				document.getElementById("medper").innerHTML = perc['medium'].toFixed(2) + "%";
 				document.getElementById("lrgper").innerHTML = perc['large'].toFixed(2) + "%";
 				
-				var smallest = '';
 				
 				for (var name in perc){
 					if (smallest !== '' && perc[name] < perc[smallest]) {
@@ -111,11 +110,23 @@
 					}
 				}
 				
-				if (perc['small'] != perc['medium'] && perc['small'] != perc['large'] && perc['medium'] != perc['large']) {
-					document.getElementById("info").innerHTML = "Focus on the " + smallest + " path.";
+				for (var name in perc){
+					if (largest !== '' && perc[name] > perc[largest]) {
+						largest = name;
+					}
+					else if (largest === '') {
+						largest = name;
+					}
+				}
+				
+				if (perc['small'] === perc['medium'] && perc['small'] === perc['large'] && perc['small'] !== null) {
+					document.getElementById("info").innerHTML = "Focus on any path.";
+				}
+				else if (perc['small'] == perc['medium'] || perc['medium'] == perc['large'] || perc['large'] == perc['small']) {
+					document.getElementById("info").innerHTML = "Focus on a non-" + largest + " path.";
 				}
 				else {
-					document.getElementById("info").innerHTML = "Focus on any path.";
+					document.getElementById("info").innerHTML = "Focus on the " + smallest + " path.";
 				}
 			}
 		</script>
