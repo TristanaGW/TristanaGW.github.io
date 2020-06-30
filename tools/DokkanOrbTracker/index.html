@@ -1,0 +1,118 @@
+<html>
+	<!-- Thanks to Github Pages for making an easy and free webhost! -->
+	<head>
+		<title>Dokkan Orb Tracker</title>
+		<style>
+			td {
+			text-align: right;
+			}
+		</style>
+		<meta property="og:site_name" content="13chag" />
+		<meta property="og:url" content="http://tristana.13chag.net/tools/dokkanorb" />
+		<meta property="og:title" content="Dokkan Orb Tracker" />
+		<meta property="og:type" content="website" />
+		<meta property="og:description" content="Track which path to go through next" />
+
+		<meta property="og:image" content="http://tristana.13chag.net/wig.png" />
+		<meta property="og:image:secure_url" content="http://tristana.13chag.net/wig.png" />
+
+
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="tristana" />
+		<meta name="twitter:description" content="dab" />
+	</head>
+	<body>
+		<div id="container">
+			<!--<div id="description">Free to play Extreme Z Awakening units require 6390 small orbs, 3480 medium orbs and 336 small orbs. This tool calculates the percentage of orbs you have towards the total you need so that you can accurately work out which size of orb you need to prioritize.</div>-->
+			<div id="description">This is a tool to calculate the percentages of orbs you have towards the totals to fully 100% the Hidden Potential system of units in Dragon Ball Z Dokkan Battle.<br />Select which unit you are looking to max in the dropdown below.</div>
+			<div id="dropdown">
+				<select id="unitSelect" onchange="unitChange()">
+					<option value=[4310,2470,223]>Non-Special AGL, TEQ, STR and PHY units</option>
+					<option value=[4330,2490,227]>Non-Special Int Units</option>
+					<option value=[6300,3400,330]>Average F2P</option>
+					<option value=[6340,3430,336]>Goku Jr.</option>
+					<option value=[6540,3530,346]>Bulma</option>
+					<option value=[6540,3530,346]>Gohan (Kid)</option>
+					<option value=[5740,3150,301]>Burter</option>
+					<option value=[6090,3370,320]>Guldo</option>
+					<option value=[6290,3430,336]>Ginyu</option>
+					<option value=[5740,3150,301]>Jeice</option>
+					<option value=[5790,3170,305]>Recoome</option>
+					<option value=[6540,3530,346]>Piccolo</option>
+					<option value=[6390,3480,336]>Trunks (Kid) & Goten (Kid)</option>
+					<option value=[6540,3530,346]>Giru</option>
+					<option value=[6540,3530,346]>Vegeta Jr.</option>
+					<option value=[6340,3430,336]>Butoden April Fools</option>
+					<option value=[6540,3530,346]>Frieza (2nd Form)</option>
+					<option value=[6540,3530,346]>Super Vegeta/Super Trunks</option>
+					<option value=[6540,3530,346]>SSJ Goku/SSJ Gohan (Youth)</option>
+					<option value=[6540,3530,346]>Three Saiyans Driven by Fate</option>
+					<option value=[5840,3250,308]>Borgos</option>
+					<option value=[5790,3170,305]>Tora</option>
+					<option value=[5790,3170,305]>Fasha</option>
+					<option value=[6540,3530,346]>Bardock</option>
+					<option value=[5790,3170,305]>Shugesh</option>
+					<option value=[6540,3530,346]>April Fools Bulma</option>
+				</select>
+			</div>
+			<table>
+				<tr>
+					<th>Size</th><th>Amount</th><th>Percentage<br />(of orbs needed)</th>
+				</tr>
+				<tr>
+					<td>Small:</td><td><input onchange="runCalc()" class="numberfield" type="number" id="sml" name="small" min="0" value="0" /></td><td><div id="smlper">0.00%</div></td>
+				</tr>
+				<tr>
+					<td>Medium:</td><td><input onchange="runCalc()" class="numberfield" type="number" id="med" name="medium" min="0" value="0" /></td><td><div id="medper">0.00%</div></td>
+				</tr>
+				<tr>
+					<td>Large:</td><td><input onchange="runCalc()" class="numberfield" type="number" id="lrg" name="large" min="0" value="0" /></td><td><div id="lrgper">0.00%</div></td>
+				</tr>
+			</table>
+			<div id="info">Focus on any path.</div>
+		</div>
+
+		<script>
+			var perc = {
+				'small':0,
+				'medium':0,
+				'large':0
+			};
+			var percnames = ["small","medium","large"];
+			var tempperc = 999999999, lowestperc = 0;
+			var compareOrb = [4310,2470,223];
+			
+			function unitChange() {
+				compareOrb = JSON.parse(document.getElementById("unitSelect").value);
+				runCalc();
+			}
+			function runCalc() {
+				
+				perc['small'] = (document.getElementById("sml").value / compareOrb[0]) * 100;
+				perc['medium'] = (document.getElementById("med").value / compareOrb[1]) * 100;
+				perc['large'] = (document.getElementById("lrg").value / compareOrb[2]) * 100;
+				document.getElementById("smlper").innerHTML = perc['small'].toFixed(2) + "%";
+				document.getElementById("medper").innerHTML = perc['medium'].toFixed(2) + "%";
+				document.getElementById("lrgper").innerHTML = perc['large'].toFixed(2) + "%";
+				
+				var smallest = '';
+				
+				for (var name in perc){
+					if (smallest !== '' && perc[name] < perc[smallest]) {
+						smallest = name;
+					}
+					else if (smallest === '') {
+						smallest = name;
+					}
+				}
+				
+				if (perc['small'] != perc['medium'] && perc['small'] != perc['large'] && perc['medium'] != perc['large']) {
+					document.getElementById("info").innerHTML = "Focus on the " + smallest + " path.";
+				}
+				else {
+					document.getElementById("info").innerHTML = "Focus on any path.";
+				}
+			}
+		</script>
+	</body>
+</html>
