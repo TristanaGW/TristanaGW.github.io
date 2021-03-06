@@ -9,7 +9,6 @@
 			font-family:monospace;
 			color: #999999;
 			font-size:1em;
-			margin:0;
 		}
 		a:link{
 			text-decoration:none;
@@ -18,10 +17,18 @@
 			color:white;
 		}
 		#content{
+			position:absolute;
+			top:50%;
+			left:50%;
+			transform:translate(-50%,-50%);
+			-webkit-transform:translate(-50%,-50%);
+			-ms-transform:translate(-50%,-50%);
+			-moz-transform:translate(-50%,-50%);
+			-o-transform:translate(-50%,-50%);
+			text-align:center;
 		}
 		#title{
 			font-size:1.25em;
-			margin-bottom:10px;
 		}
 		#footer{
 			position:fixed;
@@ -31,9 +38,6 @@
 			color:black;
 			text-align:center;
 			font-size:1.25em;
-		}
-		#links{
-			margin-top:10px;
 		}
 	</style>
 	<meta property="og:site_name" content="13chag">
@@ -52,12 +56,15 @@
 </head>
 <body>
 	<div id="content">
-		<div id="title">tristana</div>
-		<div id="bio">helscome my wedsite<br />
-		its not done.
+		<div id="title">tristana</div><br>
+		<div id="bio">she/her, 22, trans and generally likes people in ways i cant fathom<br>
+		i stream occasionally if i feel like it, usually starting around 12:00PM AEST<br>
+		i will make a game eventually, but i'm pretty unproductive so it may not happen after all
 		</div>
-		<div id="links">
-			best viewed in nedscape 1.0 or lower
+		<div id="links"><br>
+			<a href="https://twitter.com/TristanaGW">twitter</a></br>
+			<a href="https://twitch.tv/TristanaGW">twitch</a></br>
+			<a href="https://mossdeepspacecenter.tumblr.com/">tumblr</a>
 		</div>
 	</div>
 	<div id="footer">there will be more here eventually i promise</div>
