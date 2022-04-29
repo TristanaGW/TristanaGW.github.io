@@ -28,6 +28,7 @@
 			font-weight: 700;
     		word-wrap: break-word;
 			text-align: right;
+			width: 100%;
 		}
 	</style>
 	<script src="https://github.com/tmijs/tmi.js/releases/download/v1.8.5/tmi.min.js"></script>
@@ -69,7 +70,7 @@
 				let newMsg = document.body.appendChild(newDiv);
 				newMsg.className += 'douga';
 				(`${tags['subscriber']}` ? console.log('lol') : newMsg.className += ' sub');
-				(`${tags['badges']['broadcaster']}` ? newMsg.className += ' broadcaster' : console.log('not broadcaster'));
+				(`${tags['badges']['broadcaster']}` == 1 ? newMsg.className += ' broadcaster' : console.log('not broadcaster'));
 				newMsg.style.top = (Math.random()*randomRange) + '%';
 			}
 		});
