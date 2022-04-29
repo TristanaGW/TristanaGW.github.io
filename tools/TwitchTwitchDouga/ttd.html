@@ -24,11 +24,10 @@
 		.douga {
 			position: absolute;
 			text-shadow: 0 0 1px #000, 0 0 2px #000;
-			font-family: Meiryo,sans-serif;
 			font-weight: 700;
-    		word-wrap: break-word;
 			text-align: right;
 			width: 100%;
+			white-space: nowrap;
 		}
 	</style>
 	<script src="https://github.com/tmijs/tmi.js/releases/download/v1.8.5/tmi.min.js"></script>
@@ -40,6 +39,7 @@
 		const textTime = (urlParams.get('texttime') ? parseInt(urlParams.get('texttime')) : 6);
 		const textSize = (urlParams.get('textsize') ? parseInt(urlParams.get('textsize')) : 60);
 		const textLimit = (urlParams.get('textlimit') ? parseInt(urlParams.get('textlimit')) : 20);
+		const textFont = (urlParams.get('textfont') ? urlParams.get('textfont') : 'Meiryo');
 		const normColor = (urlParams.get('normcolor') ? urlParams.get('normcolor') : 'white');
 		const subColor = (urlParams.get('subcolor') ? urlParams.get('subcolor') : 'yellow');
 		const broadcasterColor = (urlParams.get('broadcastercolor') ? urlParams.get('broadcastercolor') : 'red');
@@ -47,7 +47,7 @@
 		const requireCommand = (urlParams.get('reqcommand') ? parseInt(urlParams.get('reqcommand')) : 1);
 
 		const sheet = window.document.styleSheets[0];
-		sheet.insertRule('.douga {animation: LRMove '+textTime+'s linear, elementHide '+textTime+'s linear forwards;font-size: '+textSize+'px;color:'+normColor+';}',sheet.cssRules.length);
+		sheet.insertRule('.douga {animation: LRMove '+textTime+'s linear, elementHide '+textTime+'s linear forwards;font-size: '+textSize+'px;color:'+normColor+';font-family: '+textFont+',sans-serif;}',sheet.cssRules.length);
 		sheet.insertRule('.sub {color:'+subColor+';}',sheet.cssRules.length);
 		sheet.insertRule('.broadcaster {color:'+broadcasterColor+';}',sheet.cssRules.length);
 
