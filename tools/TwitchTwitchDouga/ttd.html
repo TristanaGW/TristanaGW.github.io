@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css">
+		@keyframes LRMove {    
+		    0% {left: 120%;}
+		    100% {left: -120%;} 
+		}
+
+		@keyframes elementHide {
+		    0% {opacity: 1;}
+		    99% {opacity: 1;}
+		    100% {opacity: 0;
+		    	display: none;}
+		}
+
+		html, body {
+		   height: 100%;
+ 		   overflow: hidden;
+		}
+		body {
+			background-color: #0000;
+		}
+		.douga {
+			position: absolute;
+			text-shadow: 0 0 1px #000, 0 0 2px #000;
+			font-family: Meiryo,sans-serif;
+			font-weight: 700;
+    		word-wrap: break-word;
+			text-align: right;
+		}
+	</style>
+	<script src="https://github.com/tmijs/tmi.js/releases/download/v1.8.5/tmi.min.js"></script>
+	<script type="text/javascript">
+		const queryString = window.location.search;
+		const urlParams = new URLSearchParams(queryString);
+
+		const channelName = (urlParams.get('channel') ? urlParams.get('channel') : 'twitch');
+		const textTime = (urlParams.get('texttime') ? parseInt(urlParams.get('texttime')) : 6);
+		const textSize = (urlParams.get('textsize') ? parseInt(urlParams.get('textsize')) : 60);
+		const textLimit = (urlParams.get('textlimit') ? parseInt(urlParams.get('textlimit')) : 20);
+		const normColor = (urlParams.get('normcolor') ? urlParams.get('normcolor') : 'white');
+		const subColor = (urlParams.get('subcolor') ? urlParams.get('subcolor') : 'yellow');
+		const broadcasterColor = (urlParams.get('broadcastercolor') ? urlParams.get('broadcastercolor') : 'red');
+		const randomRange = (urlParams.get('randomrange') ? parseInt(urlParams.get('randomrange'))-1 : 89);
+		const requireCommand = (urlParams.get('reqcommand') ? parseInt(urlParams.get('reqcommand')) : 1);
+
+		const sheet = window.document.styleSheets[0];
+		sheet.insertRule('.douga {animation: LRMove '+textTime+'s linear, elementHide '+textTime+'s linear forwards;font-size: '+textSize+'px;color:'+normColor+';}',sheet.cssRules.length);
+		sheet.insertRule('.sub {color:'+subColor+';}',sheet.cssRules.length);
+		sheet.insertRule('.broadcaster {color:'+broadcasterColor+';}',sheet.cssRules.length);
+
+		const client = new tmi.Client({channels:[channelName]});
+		client.connect();
+		client.on('message', (channel, tags, message, self) => {
+			let chatMsg = `${message}`;
+			chatMsg = (requireCommand ? chatMsg.slice(5) : chatMsg);
+//			if (`${message}`.startsWith("!nnd ") == true && chatMsg.length < 10){
+			if ((`${message}`.startsWith("!nnd ") == true || requireCommand != 1) && chatMsg.length < textLimit){
+				// "Alca: Hello, World!"
+				console.log(`${tags['display-name']}: ${message}`);
+				const newDiv = document.createElement("div");
+
+				// and give it some content
+				const newContent = document.createTextNode(chatMsg);
+
+				// add the text node to the newly created div
+				newDiv.appendChild(newContent);
+				let newMsg = document.body.appendChild(newDiv);
+				newMsg.className += 'douga';
+				(`${tags['subscriber']}` ? console.log('lol') : newMsg.className += ' sub');
+				(`${tags['badges']['broadcaster']}` ? newMsg.className += ' broadcaster' : console.log('not broadcaster'));
+				newMsg.style.top = (Math.random()*randomRange) + '%';
+			}
+		});
+	</script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Twitch Twitch Douga</title>
+</head>
+<body>
+</body>
+</html>
