@@ -2,8 +2,20 @@
 <html>
 		<head>
 			<title>(Strive) Framedatle</title>
-			<meta name="description" content="Framedatle">
-			<meta name="keywords" content="wordle frame data game fighting games">
+			
+			<meta property="og:site_name" content="tristana.moe">
+			<meta property="og:url" content="https://tristana.moe/framedatle">
+			<meta property="og:title" content="Framedatle">
+			<meta property="og:type" content="website">
+			<meta property="og:description" content="Wordle-style framedata game for Guilty Gear -STRIVE-">
+
+			<meta property="og:image" content="https://tristana.moe/framedatle/header.png">
+			<meta property="og:image:secure_url" content="https://tristana.moe/framedatle/header.png">
+			
+			<meta name="twitter:card" content="summary_large_image">
+			<meta name="twitter:title" content="Framedatle">
+			<meta name="twitter:description" content="Wordle-style framedata game for Guilty Gear -STRIVE-">
+	
 			<script src="moves.js"></script>
 			<script src="seedrandom.js"></script>
 			<style>
@@ -157,6 +169,18 @@
 					color: #757575;
 					font-weight:normal;
 				}
+				#socials {
+					position: absolute;
+					bottom:5px;
+					right:5px;
+					text-align:right;
+					font-family:monospace;
+					font-size: 1.5em;
+					color: #757575;
+				}
+				#socials a:visited {
+					color: #757575;
+				}
 				
 				/* Chrome, Safari, Edge, Opera */
 				input::-webkit-outer-spin-button,
@@ -173,7 +197,7 @@
 		<body>
 			<div id="title">(Strive) Framedatle</div>
 			<div id="playArea">
-				<div id="instructions">Up arrow means the correct value is higher.<br>Down arrow means the correct value is lower.<br>On Block can be negative.</div>
+				<div id="instructions">On Block can be negative.<br>Up arrow means the correct value is higher - for a negative number, this means the correct value is <i>more</i> negative rather than smaller.<br>Down arrow means the correct value is lower - for a negative number, this means the correct value is <i>less</i> negative rather than smaller.</div>
 				<div id="hitboxes"></div><br>
 				
 				<div id="congratsDrop"></div>
@@ -190,7 +214,7 @@
 						<td><input type="number" id="startupInput" inputmode="numeric" min=0 placeholder=0></td>
 						<td><input type="number" id="activeInput" inputmode="numeric" min=0 placeholder=0></td>
 						<td><input type="number" id="recoveryInput" inputmode="numeric" min=0 placeholder=0></td>
-						<td><input type="number" id="onBlockInput" inputmode="numeric" placeholder=0></td>
+						<td><input type="number" id="onBlockInput" placeholder=0></td>
 						<td><button type="button" id="checkButton" onclick="checkAnswers()">✔</button></td>
 					</tr>
 				</table>
@@ -206,8 +230,13 @@
 					</table>
 				</div>
 			</div>
-			<div id="footer">Very rudimentary proof of concept created over one sleepless night. Todo list includes automatic scraping of info, cleaner code, more games, stuff I'm forgetting and will probably add here eventially...</div>
-			
+			<div id="footer">Very rudimentary proof of concept created over one sleepless night. Todo list includes automatic scraping of info, cleaner code, more games, saving previous answers for the current day, more stylish number input (because some numeric keyboards on mobile platforms don't have negative numbers...), stuff I'm forgetting and will probably add here eventially...</div>
+			<div id="socials">
+			<a href="https://bsky.app/profile/tristana.bsky.social">Bsky</a><br>
+			<a href="https://cohost.org/tristana">Cohost</a><br>
+			<a href="https://www.tumblr.com/mossdeepspacecenter">Tumblr</a><br>
+			<a href="https://twitter.com/TristanaGW">Twitter</a>
+			</div>
 			
 			
 			
@@ -311,7 +340,7 @@
 							answersArr[answerStuff] = answersArr[answerStuff].join('');
 						}
 						
-						document.getElementById("congratsDrop").innerHTML = "Congrats! You did it! The Move was "+todaysMoveData.chara+" "+todaysMoveData.input+"!<br><br><textarea onclick='copyEmoji()' id='emojiStuff' cols='30' rows="+(timesAnswered+4)+">Strive Framedatle #"+daysElapsed+"\n"+(timesAnswered)+" Attempt(s)\n\n"+answersArr.join('\n')+"</textarea><br><br>";
+						document.getElementById("congratsDrop").innerHTML = "Congrats! You did it! The Move was "+todaysMoveData.chara+" "+todaysMoveData.input+"!<br><br><textarea onclick='copyEmoji()' id='emojiStuff' cols='30' rows="+(timesAnswered+5)+">Strive Framedatle #"+daysElapsed+"\n"+(timesAnswered)+" Attempt(s)\nhttps://tristana.moe/framedatle/\n\n"+answersArr.join('\n')+"</textarea><br><br>";
 					}
 				}
 			</script>
