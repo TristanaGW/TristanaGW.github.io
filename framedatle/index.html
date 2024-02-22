@@ -214,7 +214,7 @@
 						<td><input type="number" id="startupInput" inputmode="numeric" min=0 placeholder=0></td>
 						<td><input type="number" id="activeInput" inputmode="numeric" min=0 placeholder=0></td>
 						<td><input type="number" id="recoveryInput" inputmode="numeric" min=0 placeholder=0></td>
-						<td><input type="number" id="onBlockInput" placeholder=0></td>
+						<td><input type="number" id="onBlockInput" inputmode="text" placeholder=0></td>
 						<td><button type="button" id="checkButton" onclick="checkAnswers()">✔</button></td>
 					</tr>
 				</table>
@@ -340,7 +340,7 @@
 							answersArr[answerStuff] = answersArr[answerStuff].join('');
 						}
 						
-						document.getElementById("congratsDrop").innerHTML = "Congrats! You did it! The Move was "+todaysMoveData.chara+" "+todaysMoveData.input+"!<br><br><textarea onclick='copyEmoji()' id='emojiStuff' cols='30' rows="+(timesAnswered+5)+">Strive Framedatle #"+daysElapsed+"\n"+(timesAnswered)+" Attempt(s)\nhttps://tristana.moe/framedatle/\n\n"+answersArr.join('\n')+"</textarea><br><br>";
+						document.getElementById("congratsDrop").innerHTML = "Congrats! You did it! The Move was "+todaysMoveData.chara+" "+todaysMoveData.input+"!<br><br><textarea onclick='copyEmoji()' id='emojiStuff' cols='30' rows="+(timesAnswered+5)+">Strive Framedatle #"+daysElapsed+"\n"+(timesAnswered)+" Attempt"+(timesAnswered>1?"s":"")+"\nhttps://tristana.moe/framedatle/\n\n"+answersArr.join('\n')+"</textarea><br><br>";
 					}
 				}
 			</script>
