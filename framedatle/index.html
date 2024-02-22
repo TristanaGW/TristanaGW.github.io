@@ -15,6 +15,8 @@
 			<meta name="twitter:card" content="summary_large_image">
 			<meta name="twitter:title" content="Framedatle">
 			<meta name="twitter:description" content="Wordle-style framedata game for Guilty Gear -STRIVE-">
+			
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
 			<script src="moves.js"></script>
 			<script src="seedrandom.js"></script>
@@ -27,7 +29,7 @@
 				}
 				#title {
 					text-align: center;
-					font-size: 50px;
+					font-size: 3em;
 					margin-bottom: 10px;
 				}
 				.box-incorrect {
@@ -77,6 +79,7 @@
 					min-height: 200px;
 					padding:10px;
 					z-index:-5;
+					max-width:95%;
 				}
 				#hitboxes img {
 					max-height: 100px;
@@ -121,7 +124,7 @@
 				#inputTable td {
 					width:80px;
 					height:80px;
-				}
+				}				
 				#inputTable input {
 					width:80px;
 					height:80px;
@@ -130,7 +133,7 @@
 					color:white;
 					font-family: Verdana, sans-serif;
 					font-weight: bold;
-					font-size: 30px;
+					font-size: 2em;
 					appearance:textfield;
 					border:0;
 					text-shadow: 0 0 3px black,0 0 3px black,0 0 3px black;
@@ -143,11 +146,26 @@
 					color:white;
 					font-family: Verdana, sans-serif;
 					font-weight: bold;
-					font-size: 30px;
+					font-size: 2em;
 					appearance:textfield;
 					border:none;
 					padding:0;
 				}
+				
+				@media (max-width: 640px) {
+					#inputTable td {
+						width:15vw;
+						height:15vw;
+					}
+					#inputTable input {
+						width:15vw;
+						height:15vw;
+					}
+					#inputTable tr {
+						font-size:0.75em;
+					}
+				}
+				
 				button:hover {
 					background-color:#99e550;
 				}
@@ -171,8 +189,8 @@
 				}
 				#socials {
 					position: absolute;
-					bottom:5px;
-					right:5px;
+					bottom:1vh;
+					right:1vw;
 					text-align:right;
 					font-family:monospace;
 					font-size: 1.5em;
