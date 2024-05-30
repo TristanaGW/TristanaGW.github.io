@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 		<head>
-			<title>(Strive) Framedatle</title>
+			<title>Framedatle Hub</title>
 			
 			<meta property="og:site_name" content="tristana.moe">
 			<meta property="og:url" content="https://tristana.moe/framedatle">
@@ -76,7 +76,7 @@
 					background-color:#171c26;
 					text-align:center;
 					width: 620px;
-					min-height: 200px;
+					min-height: 100px;
 					padding:10px;
 					z-index:-5;
 					max-width:95%;
@@ -205,6 +205,15 @@
 					font-size: 1.5em;
 					color: #757575;
 				}
+				a {
+					color: #FFFFFF;
+				}
+				a:visited {
+					color: #FFFFFF;
+				}
+				#socials a {
+					color: #757575;
+				}
 				#socials a:visited {
 					color: #757575;
 				}
@@ -222,161 +231,19 @@
 			</style>
 		</head>
 		<body>
-			<div id="title">(Strive) Framedatle</div>
+			<div id="title">Framedatle</div>
 			<div id="playArea">
-				<div id="instructions">On Block can be negative.<br>Up arrow means the correct value is higher - for a negative number, this means the correct value is <i>less</i> negative rather than smaller.<br>Down arrow means the correct value is lower - for a negative number, this means the correct value is <i>more</i> negative rather than smaller.<br>Mobile layouts have a minus toggle button.</div>
-				<div id="hitboxes"></div><br>
-				
-				<div id="congratsDrop"></div>
-				
-				<table id="inputTable">
-					<tr>
-						<th>Startup</th>
-						<th>Active</th>
-						<th>Recovery</th>
-						<th>On<br>Block</th>
-						<th>Guess</th>
-					</tr>
-					<tr>
-						<td><input type="number" id="startupInput" inputmode="numeric" min=0 placeholder=0></td>
-						<td><input type="number" id="activeInput" inputmode="numeric" min=0 placeholder=0></td>
-						<td><input type="number" id="recoveryInput" inputmode="numeric" min=0 placeholder=0></td>
-						<td><input type="number" id="onBlockInput" inputmode="text" placeholder=0></td>
-						<td><button type="button" id="checkButton" onclick="checkAnswers()">✔</button></td>
-					</tr>
-					<tr id="mobilecompat">
-						<th></th>
-						<th></th>
-						<th></th>
-						<th><button id="minusbutton" onclick="toggleMinus()">-</button></th>
-						<th></th>
-					</tr>
-				</table>
-				<br>
-				<div id="answerZone">
-					<table class="initialAnswer">
-						<tr>
-							<td class="box-none"><div class="answer">?</div></td>
-							<td class="box-none"><div class="answer">?</div></td>
-							<td class="box-none"><div class="answer">?</div></td>
-							<td class="box-none"><div class="answer">?</div></td>
-						</tr>
-					</table>
-				</div>
+				<p>The homepage for Framedatle! Currently only Strive and UNI2...</p>
+				<p>Current Games:<br>
+				<a href="./strive/">Guilty Gear -STRIVE-</a><br>
+				<a href="./uni2/">Under Night In-Birth 2 Sys:Celes</a></p>
 			</div>
-			<div id="footer">Very rudimentary proof of concept created over one sleepless night. Todo list includes automatic scraping of info, cleaner code, more games, saving previous answers for the current day, more stylish number input (because some numeric keyboards on mobile platforms don't have negative numbers...), stuff I'm forgetting and will probably add here eventially...</div>
+			<div id="footer">Games will be added when I'm interested in them :)</div>
 			<div id="socials">
 			<a href="https://bsky.app/profile/tristana.bsky.social">Bsky</a> --
 			<a href="https://cohost.org/tristana">Cohost</a> --
 			<a href="https://www.tumblr.com/mossdeepspacecenter">Tumblr</a> --
 			<a href="https://twitter.com/TristanaGW">Twitter</a>
 			</div>
-			
-			
-			
-			
-			
-			
-			<script>
-				var dayRng = new Math.seedrandom(Math.ceil(Date.now()/86400000));
-				var todaysMove = Math.floor(dayRng()*moves.length)
-				var daysElapsed = Math.ceil(Date.now()/86400000)-19773;
-				var todaysMoveData = moves[todaysMove];
-				var firstAnswer = true;
-				var timesAnswered = 0;
-				var answersArr = [];
-				for (var boxes in todaysMoveData.hitboxes) {
-					var img = document.createElement("img");
-					img.src = "https://www.dustloop.com/w/Special:FilePath/" + todaysMoveData.hitboxes[boxes];
-					var src = document.getElementById("hitboxes");
-					src.appendChild(img);
-				}
-				
-				var inputStartup = document.getElementById("startupInput");
-				var inputActive = document.getElementById("activeInput");
-				var inputRecovery = document.getElementById("recoveryInput");
-				var inputOnBlock = document.getElementById("onBlockInput");
-				
-				function addEnterStuff(thisthing) {
-					thisthing.addEventListener("keypress", function(event) {
-						if (event.key === "Enter") {
-								event.preventDefault();
-								document.getElementById("checkButton").click();
-						}
-					});
-				}
-				
-				addEnterStuff(inputStartup);
-				addEnterStuff(inputActive);
-				addEnterStuff(inputRecovery);
-				addEnterStuff(inputOnBlock);
-				
-				function upDownYes(dataNum) {
-					if (todaysMoveData[dataNum] > document.getElementById(dataNum+"Input").value) {
-						return "up";
-					} else if (todaysMoveData[dataNum] < document.getElementById(dataNum+"Input").value) {
-						return "down";
-					} else {
-						return "yes";
-					}
-				}
-				
-				function toggleMinus() {
-					inputOnBlock.value = inputOnBlock.value * -1;
-				}
-				
-				function checkAnswers () {
-					var answers = [];
-					var answerNums = [document.getElementById("startupInput").value,document.getElementById("activeInput").value,document.getElementById("recoveryInput").value,document.getElementById("onBlockInput").value];
-					var startupAnswer = (todaysMoveData.startup > document.getElementById("startupInput").value);
-					var activeAnswer = (todaysMoveData.active > document.getElementById("activeInput").value);
-					var recoveryAnswer = (todaysMoveData.recovery > document.getElementById("recoveryInput").value);
-					var onBlockAnswer = (todaysMoveData.onBlock > document.getElementById("onBlockInput").value);
-					
-					answers.push(upDownYes("startup"));
-					answers.push(upDownYes("active"));
-					answers.push(upDownYes("recovery"));
-					answers.push(upDownYes("onBlock"));
-					
-					const tbl = document.createElement("table");
-					const row = document.createElement("tr");
-					for (var answerStuff in answers) {
-						const cell = document.createElement("td");
-						const cellText = document.createElement("div");
-						if (answers[answerStuff] == "up") {
-							cell.classList.add("box-incorrect");
-							cellText.innerHTML = '<div class="box-incorrect-up"></div>';
-						} else if (answers[answerStuff] == "down") {
-							cell.classList.add("box-incorrect");
-							cellText.innerHTML = '<div class="box-incorrect-down"></div>';
-						} else {
-							cell.classList.add("box-correct");
-						}
-						cellText.innerHTML += '<div class="answer">'+(answerNums[answerStuff]!=''?answerNums[answerStuff]:'0')+'</div>';
-						cell.appendChild(cellText);
-						row.appendChild(cell);
-					}
-					tbl.appendChild(row);
-					if (firstAnswer == true) {
-						document.getElementById("answerZone").innerHTML = "";
-						tbl.classList.add("initialAnswer");
-						document.getElementById("answerZone").appendChild(tbl);
-						firstAnswer = false;
-					} else {
-						tbl.classList.add("newAnswer");
-						document.getElementById("answerZone").appendChild(tbl);
-					}
-					timesAnswered += 1;
-					answersArr.push(answers.map(function(item){return item.replace('up','&#x1F53C;')}).map(function(item){return item.replace('down','&#x1F53D;')}).map(function(item){return item.replace('yes','&#x1F7E9;')}));
-					if (answers[0]=="yes"&&answers[1]=="yes"&&answers[2]=="yes"&&answers[3]=="yes") {
-						document.getElementById("checkButton").disabled = true;
-						for (var answerStuff in answersArr) {
-							answersArr[answerStuff] = answersArr[answerStuff].join('');
-						}
-						
-						document.getElementById("congratsDrop").innerHTML = "Congrats! You did it! The Move was "+todaysMoveData.chara+" "+todaysMoveData.input+"!<br><br><textarea onclick='this.select()' id='emojiStuff' cols='30' rows="+(timesAnswered+5)+">Strive Framedatle #"+daysElapsed+"\n"+(timesAnswered)+" Attempt"+(timesAnswered>1?"s":"")+"\nhttps://tristana.moe/framedatle/\n\n"+answersArr.join('\n')+"</textarea><br><br>";
-					}
-				}
-			</script>
 		</body>
 </html>
